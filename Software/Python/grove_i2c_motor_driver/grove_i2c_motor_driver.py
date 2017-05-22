@@ -34,15 +34,15 @@ THE SOFTWARE.
 '''
 
 import time,sys
-import RPi.GPIO as GPIO
 import smbus
 
 # use the bus that matches your raspi version
-rev = GPIO.RPI_REVISION
-if rev == 2 or rev == 3:
-    bus = smbus.SMBus(1)
-else:
-    bus = smbus.SMBus(0)
+try:
+    bus = smbus.SMBus(1)  # pin 27-28
+except Exception:
+    bus = None
+    import warnings
+    warnings.warn("SMBus failed to load!")
 
 class motor_driver:
 	
